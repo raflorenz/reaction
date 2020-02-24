@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Todos from './components/Todos';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -22,17 +23,7 @@ function App() {
   return (
     <div className="app">
       {todos.length ? (
-        <div>
-          <ul>
-            {todos.map(todo => (
-              <li key={todo.id}>
-                {todo.title}
-              </li>
-            ))}
-          </ul>
-
-          <button onClick={() => setCurrentPage(currentPage + 1)}>Page {currentPage}</button>
-        </div>
+        <Todos todos={todos} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         ) : (
           <h1>Sorry, no more todos.</h1>
         )
