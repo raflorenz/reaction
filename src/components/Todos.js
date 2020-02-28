@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Todos(props) {
+export function Todos(props) {
   const { todos, currentPage, setCurrentPage } = props;
 
   return (
-    <div>
-      <ul>
+    <>
+      <ul className="px-4 py-4">
         {todos.map(todo => (
           <li key={todo.id}>
             {todo.title}
@@ -14,8 +14,6 @@ function Todos(props) {
       </ul>
 
       <button onClick={() => setCurrentPage(currentPage + 1)}>Page {currentPage}</button>
-    </div>
+    </>
   );
 }
-
-export default Todos;
