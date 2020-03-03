@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Todos } from './components/Todos';
+import { Pagination } from './components/Pagination';
 
 function App() {
   const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [todosLoaded, setTodosLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [todosPerPage] = useState(10);
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`https://jsonplaceholder.typicode.com/todos?_page=${currentPage}&_limit=10`);
-      const data = await res.json();
+      const res = await fetch('https://jsonplaceholder.typicode.com/todos');
+      const todos = await res.json();
 
-      setTodos(data);
-      setLoading(false);
+      setTodos(todos);
+      setTodosLoaded(true);
     })();
-  }, [currentPage]);
+  }, []);
+
+  // logic for getting current todos
+  const indexOfLastTodo = currentPage * todosPerPage;
+  const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+  const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
+
+  // change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   return (
-    loading ? (
-      <div className="d-flex flex-column justify-content-center align-items-center vh-100">
-        <h4 className="mb-4">Loading todos...</h4>
-        <div className="spinner-border" role="status">
-          <span className="sr-only">Loading todos...</span>
-        </div>
-      </div>
-    ) : (
+    todosLoaded ? (
       <div className="app py-5">
         <div className="container">
           <header>
@@ -33,13 +36,16 @@ function App() {
           </header>
           
           <main>
-            {todos.length ? (
-              <Todos todos={todos} currentPage={currentPage} setCurrentPage={setCurrentPage} />
-              ) : (
-                <h3 className="pt-3">Sorry, no more todos.</h3>
-              )
-            }
+            <Todos todos={currentTodos} />
+            <Pagination todosPerPage={todosPerPage} totalTodos={todos.length} paginate={paginate} />
           </main>
+        </div>
+      </div>
+    ) : (
+      <div className="d-flex flex-column justify-content-center align-items-center vh-100">
+        <h4 className="mb-4">Loading todos...</h4>
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading todos...</span>
         </div>
       </div>
     )
