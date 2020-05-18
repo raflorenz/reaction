@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Todos } from './components/Todos';
 import { Pagination } from './components/Pagination';
+import './App.css';
 
 function App() {
   const [todos, setTodos] = useState([]);

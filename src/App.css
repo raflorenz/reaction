@@ -1,0 +1,4 @@
+.pagination {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
