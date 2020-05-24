@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Todos({ todos }) {
+function Todos({ todos }) {
   return (
     <ul className="list-group pb-5">
       {todos.map(todo => (
@@ -11,3 +11,5 @@ export function Todos({ todos }) {
     </ul>
   );
 }
+
+export default Todos;

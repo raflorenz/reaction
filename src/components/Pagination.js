@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Pagination({ todosPerPage, totalTodos, paginate }) {
+function Pagination({ todosPerPage, totalTodos, paginate }) {
     const pageNumbers = [];
 
     for (let i = 1; i <= Math.ceil(totalTodos / todosPerPage); i++) {
@@ -21,3 +21,5 @@ export function Pagination({ todosPerPage, totalTodos, paginate }) {
         </nav>
     );
 }
+
+export default Pagination;

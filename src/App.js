@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Todos } from './components/Todos';
-import { Pagination } from './components/Pagination';
+import Header from './components/Header';
+import Filter from './components/Filter';
+import Todos from './components/Todos';
+import Pagination from './components/Pagination';
+import Spinner from './components/Spinner';
 import './App.css';
 
 function App() {
@@ -31,36 +34,21 @@ function App() {
     todosLoaded ? (
       <div className="app py-5">
         <div className="container">
-          <header>
-            <h1 className="display-4">Reaction</h1>
-            <p className="lead">Just another React frontend pagination</p>
-          </header>
-          
-          <main>
-            <form className="text-right pt-3 pb-2">
-              <label>
-                Items per page:
-                <select className="ml-2" value={todosPerPage} onChange={e => setTodosPerPage(e.target.value)}>
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                  <option value="25">25</option>
-                </select>
-              </label>
-            </form>
-            <Todos todos={currentTodos} />
-            <Pagination todosPerPage={todosPerPage} totalTodos={todos.length} paginate={paginate} />
-          </main>
+          <Header />
+          <Filter
+            todosPerPage={todosPerPage}
+            setTodosPerPage={setTodosPerPage}
+          />
+          <Todos todos={currentTodos} />
+          <Pagination
+            todosPerPage={todosPerPage}
+            totalTodos={todos.length}
+            paginate={paginate}
+          />
         </div>
-      </div>
+      </div> 
     ) : (
-      <div className="d-flex flex-column justify-content-center align-items-center vh-100">
-        <h4 className="mb-4">Loading todos...</h4>
-        <div className="spinner-border" role="status">
-          <span className="sr-only">Loading todos...</span>
-        </div>
-      </div>
+      <Spinner />
     )
   );
 }
