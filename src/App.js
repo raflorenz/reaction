@@ -7,7 +7,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [todosLoaded, setTodosLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [todosPerPage] = useState(10);
+  const [todosPerPage, setTodosPerPage] = useState(10);
 
   useEffect(() => {
     (async () => {
@@ -37,6 +37,18 @@ function App() {
           </header>
           
           <main>
+            <form className="text-right pt-3 pb-2">
+              <label>
+                Items per page:
+                <select className="ml-2" value={todosPerPage} onChange={e => setTodosPerPage(e.target.value)}>
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                </select>
+              </label>
+            </form>
             <Todos todos={currentTodos} />
             <Pagination todosPerPage={todosPerPage} totalTodos={todos.length} paginate={paginate} />
           </main>
